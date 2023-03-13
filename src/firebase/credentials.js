@@ -12,7 +12,7 @@ const firebaseConfig = {
   storageBucket: "medioambiente-ba528.appspot.com",
   messagingSenderId: "557889603316",
   appId: "1:557889603316:web:04c1b24de65f2f448680a1"
-}; 
+};
 
 /* const firebaseConfig = {
   apiKey: 'AIzaSyAMrd8rRwfK8d9XwRXfMA5WVnQpADNqWiE',

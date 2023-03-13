@@ -25,12 +25,14 @@ export const Register = () => {
     e.preventDefault()
     try {
       const info = await register(registerInfo.email, registerInfo.password)
-      const docuRef = getDocuRef(info.user?.uid)
+      const docuRef = getDocuRef(info.user?.uid, 'users')
       const { name, surname, dni, email, phone } = registerInfo
       await saveInfo(docuRef, { name, surname, dni, email, phone })
+      navigate('/hecho-contaminacion')
     } catch (error) {
       console.error(error)
     }
+
   }
 
   return (
