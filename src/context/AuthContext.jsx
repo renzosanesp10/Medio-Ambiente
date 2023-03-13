@@ -6,13 +6,15 @@ export const AuthContext = createContext()
 
 const Provider = ({ children }) => {
   const [user, setUser] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   const getUserData = async userFirebase => {
-    const docuRef = getDocuRef(userFirebase.uid)
+    const docuRef = getDocuRef(userFirebase.uid, 'users')
     const docSnap = await getDoc(docuRef)
     if (docSnap.exists()) {
-      const { name } = docSnap.data()
-      setUser({ name })
+      const { name, role } = docSnap.data()
+      setUser({ name, role, uid: userFirebase.uid })
+      setLoading(false)
     } else {
       console.log('No hay documentos')
     }
@@ -29,7 +31,9 @@ const Provider = ({ children }) => {
   })
 
   return (
-    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, loading }}>
+      {children}
+    </AuthContext.Provider>
   )
 }
 

@@ -1,10 +1,12 @@
 import { useContext } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { AuthContext } from '../context/AuthContext'
 import { logout } from '../functions/user'
 
 export const Navbar = () => {
-  const { user } = useContext(AuthContext)
+  const { user, loading } = useContext(AuthContext)
+  const navigate = useNavigate()
+
   return (
     <nav
       className='navbar navbar-expand-lg navbar-dark bg-dark px-5 position-sticky top-0'
@@ -34,9 +36,9 @@ export const Navbar = () => {
         <ul className='navbar-nav ms-auto'>
           {!user ? (
             <>
-              <li className='nav-item active'>
+              <li className='nav-item'>
                 <Link className='nav-link' to='/login'>
-                  <span className='sr-only'>Iniciar sesión</span>
+                  Iniciar sesión
                 </Link>
               </li>
               <li className='nav-item'>
@@ -46,48 +48,44 @@ export const Navbar = () => {
               </li>
             </>
           ) : (
-            <>
-              <li className='nav-item active'>
-                <a className='nav-link' href='#'>
-                  <span className='sr-only'>Registrar hecho</span>
-                </a>
-              </li>
-              <li className='nav-item dropdown'>
-                <a
-                  className='nav-link dropdown-toggle'
-                  href='#'
-                  id='navbarDropdown'
-                  role='button'
-                  data-bs-toggle='dropdown'
-                  aria-expanded='false'
-                >
-                  {user}
-                </a>
-                <ul
-                  className='dropdown-menu'
-                  style={{ top: '35px', left: '-105px' }}
-                  aria-labelledby='navbarDropdown'
-                >
-                  <li>
-                    <a className='dropdown-item' href='#'>
-                      Ayuda
-                    </a>
-                  </li>
-                  <li>
-                    <hr className='dropdown-divider' />
-                  </li>
-                  <li>
-                    <a
-                      className='dropdown-item'
-                      type='button'
-                      onClick={() => logout()}
-                    >
-                      Cerrar sesión
-                    </a>
-                  </li>
-                </ul>
-              </li>
-            </>
+            <li className='nav-item dropdown'>
+              <a
+                className='nav-link dropdown-toggle'
+                href='#'
+                id='navbarDropdown'
+                role='button'
+                data-bs-toggle='dropdown'
+                aria-expanded='false'
+              >
+                {user && user.name}
+              </a>
+              <ul
+                className='dropdown-menu'
+                style={{ top: '35px', left: '-105px' }}
+                aria-labelledby='navbarDropdown'
+              >
+                <li>
+                  <a className='dropdown-item' href='#'>
+                    Ayuda
+                  </a>
+                </li>
+                <li>
+                  <hr className='dropdown-divider' />
+                </li>
+                <li>
+                  <a
+                    className='dropdown-item'
+                    type='button'
+                    onClick={() => {
+                      logout()
+                      navigate('/login')
+                    }}
+                  >
+                    Cerrar sesión
+                  </a>
+                </li>
+              </ul>
+            </li>
           )}
         </ul>
       </div>

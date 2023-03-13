@@ -36,14 +36,19 @@ export const logout = () => {
   signOut(auth)
 }
 
-export const getDocuRef = id => {
-  return doc(store, 'users', id)
+export const getDocuRef = (id, document) => {
+  return doc(store, document, id)
 }
 
 export const saveInfo = async (docuRef, data) => {
   await setDoc(docuRef, data)
 }
 
-export const login = (email, password) => {
-  signInWithEmailAndPassword(auth, email, password)
+export const login = async (email, password) => {
+  try {
+    const userLogin = await signInWithEmailAndPassword(auth, email, password)
+    return userLogin
+  } catch (error) {
+    throw new Error(error)
+  }
 }
