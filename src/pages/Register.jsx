@@ -24,7 +24,7 @@ export const Register = () => {
     e.preventDefault()
     try {
       const info = await register(registerInfo.email, registerInfo.password)
-      const docuRef = getDocuRef(info.user.uid)
+      const docuRef = getDocuRef(info.user?.uid)
       const { name, surname, dni, email, phone } = registerInfo
       await saveInfo(docuRef, { name, surname, dni, email, phone })
     } catch (error) {
